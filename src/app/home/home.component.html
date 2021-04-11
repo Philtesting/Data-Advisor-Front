@@ -1,0 +1,158 @@
+<div class="container">
+  <div class="row">
+    <div class="col col-sm-12 col-lg-6 col-md-12 task_area">
+      <h3 class="title_block" style="margin-bottom: 50px;">Plateforme pour connaître votre réseau</h3>
+      <h4 >On vous propose plusieurs fonctionnalités: </h4>
+      <br>
+      <ul >
+        <li class="task_list">
+          <img class="checkmark" src="/assets/img/checkmark.png" alt="">
+          <a href="#carte">Une carte avec les meilleurs réseaux a votre proximiter</a>
+        </li>
+        <li class="task_list">
+          <img class="checkmark" src="/assets/img/checkmark.png" alt="">
+          <a href="#5G">L’accès a la 5G</a>
+        </li>
+        <li class="task_list">
+          <img class="checkmark" src="/assets/img/checkmark.png" alt="">
+          <a href="#operateur">Comparateur de forfait box internet</a>
+        </li>
+        <li class="task_list">
+          <img class="checkmark" src="/assets/img/checkmark.png" alt="">
+          <a href="#mobile">Comparateur de forfait mobile </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col col-sm-12 col-lg-5 col-md-12 text-center">
+      <img class="homepage_demo" src="/assets/img/homepage.png" alt="homepage_1">
+    </div>
+  </div>
+
+  <hr id="carte">
+
+  <h3 class="title_block">Notre carte</h3>
+  <div class="row">
+    <div class="col-7">
+      <a href="#" routerLink="/carte"><img class="carte_demo" src="/assets/img/carte.png" alt="homepage_2"></a>
+    </div>
+    <div class="col col-sm-12 col-lg-5 col-md-12">
+      <div class="carte_text">
+          <p>
+            Il existe un grand nombre de box internet et de forfaits mobiles.
+          </p>
+          <p>
+            Pour faciliter votre choix nous, vous proposons des offres en fonction des réseaux déployés par les opérateurs à proximité de votre adresse.
+          </p>
+          <p>
+            Data Advisor propose une carte de couverture pour suivre le déploiement de la fibre optique, de l'ADSL mais aussi de la 4G et de la 5G, en fonction de votre adresse.
+          </p>
+          <div>
+            <a class="btn_home" href="#" routerLink="/carte">Commencer</a>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <hr id="5G">
+
+  <div  class="row">
+    <div class="col col-sm-12 col-lg-5 col-md-12">
+      <div class="news_text">
+        <h3 class="title_block"  style="margin-bottom: 40px;">5G : tout comprendre au réseau mobile du futur</h3>
+        <p>
+          Suite de la 4G, la 5G est la cinquième génération de standards en télécommunication mobile. Ces débits de données sont susceptibles de répondre à la demande croissante de données avec l'essor des smartphones et objets communicants, connectés en réseau.
+        </p>
+        <p>
+          Considérée comme une technologie clé, elle propose des débits de plusieurs gigabits et devrait être jusqu'à 100 fois plus rapide que la 4G.
+        </p>
+        <p>
+          Découvrez tout ce que vous devez savoir sur la 5G, le réseau mobile sans fil de nouvelle génération : fonctionnement, dangers, avantages...
+        </p>
+        <div>
+          <a class="btn_home" href="#" routerLink="/newsletter">Voir Plus</a>
+        </div>
+      </div>
+    </div>
+    <div class="col col-sm-12 col-lg-6 col-md-12">
+      <img class="news_demo" src="/assets/img/reseau.png" alt="homepage_3">
+    </div>
+  </div>
+
+  <hr id="operateur">
+
+  <div class="row">
+    <div class="col">
+      <h3 class="title_block float-left">Box internet</h3>
+      <a class="float-right" href="#" routerLink="/box-internet"><p style="margin-left: auto;order: 2;">+ voir tous</p></a>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div *ngFor="let offre of boxInternet">
+      <div class="col-sm-4 py-2">
+        <div class="card" style="width: 18rem;">
+          <div class="row ">
+            <div class="col-12 mb-3">
+              <img class="card-img-top border-bottom border-dark" style="height: 200px;object-fit: cover;" src="{{host}}/{{offre.image}}" alt="image not found">
+            </div>
+            <div class="col-12 mb-5">
+              <h5 class="card-title text-center">
+                {{offre.titre}}
+              </h5>
+            </div>
+            <div class="col-12 mb-5">
+              <div class="text-center">
+                <b>{{offre.prix}}</b> € <span class="text-secondary">/ mois</span>
+              </div>
+            </div>
+            <div class="col-12 mb-4">
+              <div class="text-center ">
+                <a href="{{offre.url}}" class="btn_home">Voir Offre</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr id="mobile">
+  <div class="row mb-3">
+    <div class="col">
+      <h3 class="title_block float-left">Forfaits Mobile</h3>
+      <a class="float-right" href="#" routerLink="/mobile"><p style="margin-left: auto;order: 2;">+ voir tous</p></a>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div *ngFor="let offre of mobiles">
+      <div class="col-sm-4 py-2">
+        <div class="card" style="width: 18rem;">
+          <div class="row ">
+            <div class="col-12 mb-3">
+              <img class="card-img-top border-bottom border-dark" style="height: 200px;object-fit: cover;" src="{{host}}/{{offre.image}}" alt="image not found">
+            </div>
+            <div class="col-12 mb-5">
+              <h5 class="card-title text-center">
+                {{offre.titre}}
+              </h5>
+            </div>
+            <div class="col-12 mb-5">
+              <div class="text-center">
+                <b>{{offre.prix}}</b> € <span class="text-secondary">/ mois</span>
+              </div>
+            </div>
+            <div class="col-12 mb-4">
+              <div class="text-center ">
+                <a href="{{offre.url}}" class="btn_home">Voir Offre</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+
+<app-scroll-top></app-scroll-top>

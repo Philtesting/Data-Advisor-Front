@@ -1,0 +1,15 @@
+.news_img img{
+  height: 200px;
+}
+.news_img{
+  display: flex;
+  justify-content: center;
+}
+.news_img img{
+  max-width:100%;
+  max-height:100%;
+}
+
+.news_footer{
+  text-align:center;
+}

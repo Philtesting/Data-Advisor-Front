@@ -1,0 +1,35 @@
+<div class="carte-container">
+  <div class="row">
+    <div class="col-3">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+              Carte Reseau Mobile
+          </h5>
+        </div>
+        <div class="card-body">
+          <button (click)="setCurrMobileData(0)">2G</button>
+          <button (click)="setCurrMobileData(1)">3G</button>
+          <button (click)="setCurrMobileData(1)">4G</button>
+
+          <button (click)="setCurrProvider('free')">Free Mobile</button>
+          <button (click)="setCurrProvider('orange')">Orange</button>
+          <button (click)="setCurrProvider('bouy')">Bouygues Telecom</button>
+          <button (click)="toggle5gLayer()">5G</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+              Carte Fibre
+          </h5>
+        </div>
+        <div class="card-body">
+        </div>
+      </div>
+    </div>
+    <div class="col-9">
+        <div class="carte" id="map"></div>
+    </div>
+  </div>
+</div>

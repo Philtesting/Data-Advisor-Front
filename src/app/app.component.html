@@ -1,0 +1,73 @@
+
+<header>
+  <div class="container">
+    <nav class="navbar navbar-expand-md navbar-fixed-top navbar-dark">
+      <div class="d-inline-flex mr-5">
+        <a class="navbar-brand logo" href="#" routerLink="/"><img class="nav-logo" src="/assets/img/logo.png">&nbsp;Data Advisor</a>
+        <button class="navbar-toggler" type="button" (click)="toggleNavbar = !toggleNavbar" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04" [ngbCollapse]="toggleNavbar">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#" routerLink="/">Acceuil</a>
+          </li>
+          <li class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" id="dropdown" ngbDropdownToggle>Les Opérateurs</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown" ngbDropdownMenu>
+              <a class="dropdown-item" href="#" routerLink="/box-internet">Box internet</a>
+              <a class="dropdown-item" href="#" routerLink="/mobile">Forfaits Mobiles</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" routerLink="/carte">Mon Adresse</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link image-5g" href="#" routerLink="/newsletter">
+              &nbsp;5G&nbsp;
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- <div id="map" class="map"></div> -->
+
+
+<router-outlet></router-outlet>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <h6>About</h6>
+        <p class="text-justify">
+          Ceci est un site fictif pour notre projet de Web en M1 MIAGE, fait par Samy Letombe, Lina Chakhchoukh, Margaux Lemoine et Philippe Fidalgo.
+        </p>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-sm-6 col-xs-12">
+        <p class="copyright-text">Data Advisor &copy; 2021
+        </p>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <ul class="social-icons">
+          <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+          <li><a class="google" href="#"><i class="fa fa-google"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
