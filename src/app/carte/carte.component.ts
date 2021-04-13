@@ -55,7 +55,7 @@ export class CarteComponent implements AfterViewInit {
     let provider = new OpenStreetMapProvider();
 
     let myCustomMarker = {
-      icon: new L.Icon.Default(),
+      icon: new L.icon({iconUrl: '/assets/img/marker-icon.png'}),
       draggable: false,
     }
 
@@ -66,7 +66,7 @@ export class CarteComponent implements AfterViewInit {
       autoCompleteDelay: 250,
       marker: myCustomMarker,
     }).addTo(this.map);
-    
+
     this.map.addControl(searchControl);
 
     tiles.addTo(this.map);
