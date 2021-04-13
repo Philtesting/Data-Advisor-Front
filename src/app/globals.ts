@@ -1,1 +1,1 @@
-export const API_HOST: string="http://localhost:8000";
+export const API_HOST: string="http://87.98.218.219:90";
