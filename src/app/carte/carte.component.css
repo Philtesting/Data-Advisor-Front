@@ -8,3 +8,9 @@
   position: static;
   height: 100%;
 }
+
+.loading-spinner{
+  z-index: 401;
+  right: 50%;
+  bottom: 50%;
+}

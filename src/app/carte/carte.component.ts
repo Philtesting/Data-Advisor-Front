@@ -1,7 +1,9 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
 import { ShapeService } from '../shape.service';
 import * as L from 'leaflet';
+import { HttpClient } from '@angular/common/http';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import * as myGlobals from '../globals';
 
 
 @Component({
@@ -16,17 +18,28 @@ export class CarteComponent implements AfterViewInit {
 
   @Input("appCode")
   public appCode: string;
+  public loading = true;
 
   private map;
   private states;
-  private currMap = 0;
-  private currProvider = "bouy";
-  private stateLayer;
+  private currMap;
+  private currProvider = "BOUY";
+  private stateLayer2g;
+  private stateLayer3g;
+  private stateLayer4g;
   private stateLayer5g;
+  private stateLayerFibre;
+  private has2g = false;
+  private has3g = false;
+  private has4g = false;
   private has5g = false;
+  private hasFibre = false;
+  public host = myGlobals.API_HOST;
+
 
   constructor(
     private shapeService: ShapeService,
+    private http: HttpClient,
   ) { }
 
   private initMap(): void {
@@ -42,9 +55,9 @@ export class CarteComponent implements AfterViewInit {
     let provider = new OpenStreetMapProvider();
     let searchControl = GeoSearchControl({
       style: 'button',
-      provider: provider, // required
-      autoComplete: true, // optional: true|false  - default true
-      autoCompleteDelay: 250, // optional: number      - default 250
+      provider: provider,
+      autoComplete: true,
+      autoCompleteDelay: 250,
     }).addTo(this.map);
 
     this.map.addControl(searchControl);
@@ -52,26 +65,60 @@ export class CarteComponent implements AfterViewInit {
     tiles.addTo(this.map);
   }
 
-  private initStatesLayer() {
-    this.stateLayer = L.geoJSON(this.states, {
+  private initStatesLayer2g(states) {
+    this.stateLayer2g = L.geoJSON(states, {
       style: (feature) => ({
         weight: 3,
         opacity: 0,
-        fillOpacity: 0.3,
+        fillOpacity: 0.4,
         fillColor: '#e36565'
       })
     });
-    this.map.addLayer(this.stateLayer);
-    this.stateLayer5g.bringToFront();
+    if(this.has2g){
+      this.map.addLayer(this.stateLayer2g);
+    }
   }
+
+  private initStatesLayer3g(states) {
+    this.stateLayer3g = L.geoJSON(states, {
+      style: (feature) => ({
+        weight: 3,
+        opacity: 0,
+        fillOpacity: 0.4,
+        fillColor: '#e38464'
+      })
+    });
+    if(this.has3g){
+      this.map.addLayer(this.stateLayer3g);
+    }
+  }
+
+  private initStatesLayer4g(states) {
+    this.stateLayer4g = L.geoJSON(states, {
+      style: (feature) => ({
+        weight: 3,
+        opacity: 0,
+        fillOpacity: 0.4,
+        fillColor: '#e3a364'
+      })
+    });
+    if(this.has4g){
+      this.map.addLayer(this.stateLayer4g);
+    }
+  }
+
   private initStatesLayer5g(states) {
-    let myRenderer = L.canvas({ padding: 0.5 });
+    let myRenderer = L.canvas({});
     this.stateLayer5g = L.geoJSON(states, {
-      style: (feature) => ({}),
+      style: (feature) => ({fillOpacity : 1}),
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, {
-            radius: 2,
-            color: "#f00",
+            radius: 5,
+            color: "black",
+            weight: 1,
+            fill: true,
+            fillColor: "darkred",
+            stroke : true,
             opacity: 1,
             interactive: false,
             renderer: myRenderer,
@@ -81,21 +128,81 @@ export class CarteComponent implements AfterViewInit {
     });
   }
 
-  private removeLayerToMap(){
-    this.map.removeLayer(this.stateLayer);
+  private initStatesLayerFibre(states) {
+    let myRenderer = L.canvas({});
+    this.stateLayerFibre = L.geoJSON(states, {
+      style: (feature) => ({fillOpacity : 1}),
+      pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, {
+            radius: 5,
+            color: "black",
+            weight: 1,
+            fill: true,
+            fillColor: "darkblue",
+            stroke : true,
+            opacity: 1,
+            interactive: false,
+            renderer: myRenderer,
+          }
+        );
+      }
+    });
   }
 
-  addLayerToMap(){
-    this.removeLayerToMap();
-    let allSapefiles = this.shapeService.getStateShapes();
-
-    for (const [key, value] of Object.entries(allSapefiles)) {
-      if(key == this.currProvider ){
-        value[this.currMap].subscribe(states => {
-          this.states = states;
-          this.initStatesLayer();
-        });
+  toggleProvider(provider){
+    this.loading = true;
+    this.currProvider = provider;
+    this.http.get<any>(this.host+'/api/carte/'+this.currProvider+"_2G").subscribe(data => {
+      if(this.has2g){
+        this.map.removeLayer(this.stateLayer2g);
       }
+      this.initStatesLayer2g(data);
+    })
+    this.http.get<any>(this.host+'/api/carte/'+this.currProvider+"_3G").subscribe(data => {
+      if(this.has3g){
+        this.map.removeLayer(this.stateLayer3g);
+      }
+      this.initStatesLayer3g(data);
+    })
+    this.http.get<any>(this.host+'/api/carte/'+this.currProvider+"_4G").subscribe(data => {
+      if(this.has4g){
+        this.map.removeLayer(this.stateLayer4g);
+      }
+      this.initStatesLayer4g(data);
+      this.loading = false;
+    })
+  }
+
+  toggle2gLayer(){
+    if(this.has2g){
+      this.map.removeLayer(this.stateLayer2g);
+      this.has2g = false;
+    }
+    else{
+      this.map.addLayer(this.stateLayer2g);
+      this.has2g = true;
+    }
+  }
+
+  toggle3gLayer(){
+    if(this.has3g){
+      this.map.removeLayer(this.stateLayer3g);
+      this.has3g = false;
+    }
+    else{
+      this.map.addLayer(this.stateLayer3g);
+      this.has3g = true;
+    }
+  }
+
+  toggle4gLayer(){
+    if(this.has4g){
+      this.map.removeLayer(this.stateLayer4g);
+      this.has4g = false;
+    }
+    else{
+      this.map.addLayer(this.stateLayer4g);
+      this.has4g = true;
     }
   }
 
@@ -108,41 +215,37 @@ export class CarteComponent implements AfterViewInit {
       this.map.addLayer(this.stateLayer5g);
       this.has5g = true;
     }
-
   }
 
-  setCurrMobileData(currMap){
-    this.currMap = currMap;
-    this.addLayerToMap();
-  }
-  setCurrProvider(provider){
-    this.currProvider = provider;
-    this.addLayerToMap();
+  toggleFibreLayer(){
+    if(this.hasFibre){
+      this.map.removeLayer(this.stateLayerFibre);
+      this.hasFibre = false;
+    }
+    else{
+      this.map.addLayer(this.stateLayerFibre);
+      this.hasFibre = true;
+    }
   }
 
   ngAfterViewInit() {
     this.initMap();
-    this.shapeService.getStateShapes().bouy[0].subscribe(states => {
-      this.states = states;
-      this.initStatesLayer();
-    });
-    this.shapeService.get5gLayer().subscribe(states => {
+    this.http.get<any>(this.host+'/api/carte/5G').subscribe(states => {
       this.initStatesLayer5g(states);
     });
+    this.http.get<any>(this.host+'/api/carte/Fibre').subscribe(data => {
+      this.initStatesLayerFibre(data);
+    })
+    this.http.get<any>(this.host+'/api/carte/'+this.currProvider+"_2G").subscribe(data => {
+      this.initStatesLayer2g(data);
+    })
+    this.http.get<any>(this.host+'/api/carte/'+this.currProvider+"_3G").subscribe(data => {
+      this.initStatesLayer3g(data);
+    })
+    this.http.get<any>(this.host+'/api/carte/'+this.currProvider+"_4G").subscribe(data => {
+      this.initStatesLayer4g(data);
+      this.loading = false;
+    })
   }
-
-  // public dropMarker(address: string) {
-  //   this.http.get("https://geocoder.api.here.com/6.2/geocode.json", {
-  //       params: {
-  //           app_id: this.appId,
-  //           app_code: this.appCode,
-  //           searchtext: address
-  //       }
-  //   }).subscribe(result => {
-  //       let location = result.Response.View[0].Result[0].Location.DisplayPosition;
-  //       let marker = new L.Marker([location.Latitude, location.Longitude]);
-  //       marker.addTo(this.map);
-  //   });
-  // }
 
 }

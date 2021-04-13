@@ -1,35 +1,99 @@
 <div class="carte-container">
   <div class="row">
-    <div class="col-3">
+    <div class="col-12 col-md-12 col-lg-3 col-sm-12 pr-0">
       <div class="card">
-        <div class="card-header" id="headingOne">
+        <div class="card-header" id="headingTwo">
           <h5 class="mb-0">
-              Carte Reseau Mobile
+              Couverture
           </h5>
         </div>
         <div class="card-body">
-          <button (click)="setCurrMobileData(0)">2G</button>
-          <button (click)="setCurrMobileData(1)">3G</button>
-          <button (click)="setCurrMobileData(1)">4G</button>
-
-          <button (click)="setCurrProvider('free')">Free Mobile</button>
-          <button (click)="setCurrProvider('orange')">Orange</button>
-          <button (click)="setCurrProvider('bouy')">Bouygues Telecom</button>
-          <button (click)="toggle5gLayer()">5G</button>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="operateur">Choisisser un operateur</label>
+              <select (change)="toggleProvider($event.target.value)" class="form-control" id="operateur">
+                <option value="BOUY" selected>Bouygues Telecom</option>
+                <option value="FREE">Free</option>
+                <option value="ORANGE">Orange</option>
+                <option value="SFR">SFR</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-check d-flex flex-row align-items-center mb-1">
+              <input (click)="toggle2gLayer()" type="checkbox" class="form-check-input" id="2G" value="0">
+              <label class="form-check-label" for="2G">
+                2G
+              </label>
+              <div class="ml-auto">
+                <img class="border border-dark" src="/assets/img/legend1.png" style="height: 2rem;" alt="homepage_3">
+              </div>
+            </div>
+            <div class="form-check d-flex flex-row align-items-center mb-1">
+              <input (click)="toggle3gLayer()" type="checkbox" class="form-check-input" id="3G" value="1">
+              <label class="form-check-label" for="3G">
+                3G
+              </label>
+              <div class="ml-auto">
+                <img class="border border-dark" src="/assets/img/legend2.png" style="height: 2rem;" alt="homepage_3">
+              </div>
+            </div>
+            <div class="form-check d-flex flex-row align-items-center mb-1">
+              <input (click)="toggle4gLayer()" type="checkbox" class="form-check-input" id="4G" value="2">
+              <label class="form-check-label" for="4G">
+                4G
+              </label>
+              <div class="ml-auto">
+                <img class="border border-dark" src="/assets/img/legend3.png" style="height: 2rem;" alt="homepage_3">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+              Émetteur 5G
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="col-12 d-flex flex-row align-items-center">
+            <input class="p-2" id="5G" type="checkbox" (click)="toggle5gLayer()">
+            <label class="form-check-label p-2" for="5G">
+              5G
+            </label>
+            <div class="ml-auto">
+              <img src="/assets/img/legend4.png" style="height: 2rem;" alt="homepage_3">
+            </div>
+          </div>
         </div>
       </div>
       <div class="card">
         <div class="card-header" id="headingTwo">
           <h5 class="mb-0">
-              Carte Fibre
+            Carte Fibre
           </h5>
         </div>
         <div class="card-body">
+          <div class="col-12 d-flex flex-row align-items-center">
+              <input class="p-2" id="fibre" type="checkbox" (click)="toggleFibreLayer()">
+              <label class="form-check-label p-2" for="fibre">
+                Point de mutualisation Fibre
+              </label>
+            <div class="ml-auto">
+              <img src="/assets/img/legend5.png" style="height: 2rem;" alt="homepage_3">
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-9">
-        <div class="carte" id="map"></div>
+    <div class="col-12 col-md-12 col-lg-9 col-sm-12 pl-0">
+      <div *ngIf="loading" class="position-absolute loading-spinner">
+        <div class="spinner-border justify-content-center text-dark" style="width: 6rem; height: 6rem;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="carte" id="map"></div>
     </div>
   </div>
 </div>

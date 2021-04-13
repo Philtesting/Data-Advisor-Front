@@ -12,6 +12,8 @@ import { ShapeService } from './shape.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollTopComponent } from './scroll-top/scroll-top.component';
 import { BoxInternetComponent } from './box-internet/box-internet.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { BoxInternetComponent } from './box-internet/box-internet.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [ShapeService],
   bootstrap: [AppComponent]

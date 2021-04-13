@@ -1,1 +1,198 @@
-<p>box-internet works!</p>
+<div class="row mt-5 mb-5 ml-5">
+  <div class="col">
+    <h3 class="font-weight-bold">Box internet</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-lg-3 col-md-3 col-sm-3">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+            Prix
+        </h5>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="row d-flex flex-row align-items-center">
+            <div class="col-2">
+              <label class="p-2" for="price-min">Min:</label>
+            </div>
+            <div class="col col-sm-12 col-lg-6 col-md-12">
+              <input (change)="changePrice()" class="m-2" [(ngModel)]="min" type="range" name="price-min" id="price-min" min="0" max="100">
+            </div>
+            <div class="col col-sm-12 col-lg-4 col-md-12">
+              <div class="p-1" style="font-size: 1rem;">{{min}} €</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row d-flex flex-row align-items-center">
+            <div class="col-2">
+              <label class="p-2" for="price-max">Max:</label>
+            </div>
+            <div class="col col-sm-12 col-lg-6 col-md-12">
+              <input (change)="changePrice()" class="m-2" [(ngModel)]="max" type="range" name="price-max" id="price-max" min="0" max="100">
+            </div>
+            <div class="col col-sm-12 col-lg-4 col-md-12">
+              <div class="p-1" style="font-size: 1rem;">{{max}} €</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+            Opérateurs
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="operateur">Choisissez un opérateur</label>
+          <select (change)="changeOperateur($event.target.value)" class="form-control" id="operateur">
+            <option selected></option>
+            <option value="BOUY">Bouygues Telecom</option>
+            <option value="FREE">Free</option>
+            <option value="ORANGE">Orange</option>
+            <option value="SFR">SFR</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+            Type de internet
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="operateur">Choisissez un Type de internet</label>
+          <select (change)="changeType($event.target.value)"class="form-control" id="operateur">
+            <option selected></option>
+            <option value="ADSL">ADSL</option>
+            <option value="FIBRE">Fibre</option>
+            <option value="4G">4G</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          Télévision incluse
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="operateur">Offre avec ou sans Télévision</label>
+          <select (change)="changeTv($event.target.value)"class="form-control" id="operateur">
+            <option selected></option>
+            <option value="1">avec TV</option>
+            <option value="0">sans TV</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+            Éligibilité Fibre
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          Pour savoir si vous êtes éligible à la fibre optique, consultez notre carte pour voir si vous avez des points de mutualisation fibre près de chez vous!
+        </div>
+        <div class="">
+          <a href="#top" routerLink="/carte" class="btn btn-primary">Plus de info</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-9">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="title" (keydown.enter)="searchTitle()" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                  <div (click)="searchTitle()"  class="input-group-append">
+                    <span class="input-group-text" id="inputGroup-sizing-default"><i class="fa fa-search"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 float-right">
+                <select  (change)="changeOrder($event.target.value)" class="form-control">
+                  <option value="ASC">Prix - Du moins cher au plus cher</option>
+                  <option value="DESC">Prix - Du plus cher au moin cher</option>
+                </select>
+              </div>
+              <div class="col mt-3">
+                Voici {{ (currPage * 9) + (data.data?.length || 0) }} - {{data.count}} offres
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="row justify-content-md-right">
+          <div *ngFor="let offre of data.data">
+            <div class="col-sm-4 py-2">
+              <div class="card" style="width: 18rem;">
+                <div class="row ">
+                  <div class="col-12 mb-3">
+                    <img class="card-img-top border-bottom border-dark" style="height: 200px;object-fit: cover;" src="{{host}}/{{offre.image}}" alt="image not found">
+                  </div>
+                  <div class="col-12 mb-5">
+                    <h5 class="card-title text-center">
+                      {{offre.titre}}
+                    </h5>
+                  </div>
+                  <div class="col-12 mb-5">
+                    <div class="text-center">
+                      <p>
+                        <b>{{offre.prix}}</b> € <span class="text-secondary">/ mois</span>
+                      </p>
+                      <p>
+                        {{offre.type}}
+                      </p>
+                      <p>
+                        Avec TV <i *ngIf="offre.hasTv else removeIcon" class="fa fa-check-square text-success"> </i>
+                        <ng-template #removeIcon> <i class="fa fa-remove text-danger"> </i></ng-template>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-4">
+                    <div class="text-center ">
+                      <a href="{{offre.url}}" class="btn_home">Voir Offre</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-5 text-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li *ngFor="let page of createRange(data.count); let index = index" class="page-item"><a class="page-link" (click)="changeOffset($event.target)" href="/box-internet#top" value="{{index}}">{{index + 1}}</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+<app-scroll-top></app-scroll-top>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
