@@ -53,13 +53,20 @@ export class CarteComponent implements AfterViewInit {
     });
 
     let provider = new OpenStreetMapProvider();
+
+    let myCustomMarker = {
+      icon: new L.Icon.Default(),
+      draggable: false,
+    }
+
     let searchControl = GeoSearchControl({
       style: 'button',
       provider: provider,
       autoComplete: true,
       autoCompleteDelay: 250,
+      marker: myCustomMarker,
     }).addTo(this.map);
-
+    
     this.map.addControl(searchControl);
 
     tiles.addTo(this.map);
